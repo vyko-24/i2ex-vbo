@@ -7,7 +7,7 @@ pipeline {
                 script {
                     bat """
                     echo Parando servicios existentes...
-                    docker compose -p recu down || exit /b 0
+                    docker compose -p i2ex-vbo down || exit /b 0
                     """
                 }
             }
