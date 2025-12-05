@@ -1,0 +1,36 @@
+# Aquí se configuran los contenedores
+services:
+    
+  imcform:
+    image: client:v1.0.3
+    build:
+      context: ./imc-client
+      args:
+        API_URL: http://localhost:8081/api/
+    container_name: imc-cliente
+    ports:
+      - "3000:80"
+    networks:
+      - i2ex-vbo-net
+        
+  calculator:
+    image: calculator:v1.0.3
+    build:
+      context: ./backend
+    container_name: imc-backend
+    environment:   
+      SERVER_PORT: 8080
+    ports:
+      - "8081:8080"
+    networks:
+      - i2ex-vbo-net  
+    depends_on:
+      - imcform
+
+# Aquí se configuran las redes donde se comunican los contenedores
+# docker network create --driver bridge i2ex-vbo-net
+networks:
+  i2ex-vbo-net:
+    external: true
+
+# docker compose up --build -d
